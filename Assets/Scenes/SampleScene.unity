@@ -1060,6 +1060,7 @@ MonoBehaviour:
   maxAmmo: 0
   AmmoText: {fileID: 1739475651}
   HealthText: {fileID: 49302944}
+  player: {fileID: 1124087187}
 --- !u!4 &541159424
 Transform:
   m_ObjectHideFlags: 0
