@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public int health;
     public int ammo;
     public int maxAmmo;
+    public string weaponName;
+    public TMP_Text WeaponText;
     public TMP_Text AmmoText;
     public TMP_Text HealthText;
     public GameObject player;
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         health = player.GetComponent<health>().currentHealth;
+        WeaponText.text = weaponName;
         AmmoText.text = ammo + "/" + maxAmmo;
         HealthText.text = "Health: " + health;
     }

@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class MoveForward : MonoBehaviour
 {
-    private float speed = 20.0f;
+    public int damage = 1;
+    public float speed = 20.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,7 @@ public class MoveForward : MonoBehaviour
         if (Other.gameObject.tag == "Player" || Other.gameObject.tag == "Enemy")
         {
             var healthcomponent = Other.gameObject.GetComponent<health>();
-            healthcomponent.takeDamage(1);
+            healthcomponent.takeDamage(damage);
         }
         Destroy(this.gameObject);
     }

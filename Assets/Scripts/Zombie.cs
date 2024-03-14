@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Zombie : MonoBehaviour
 {
-    public static event Action<Zombie> OnZombieKilled;
+    //public static event Action<Zombie> OnZombieKilled;
     [SerializeField] int maxHealth = 3;
     [SerializeField] float moveSpeed = 5f;
 
