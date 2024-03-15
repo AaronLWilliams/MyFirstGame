@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Revolver : MonoBehaviour
 {
-    private int revolverAmmo, revolverMaxAmmo = 6;
+    private int revolverAmmo, revolverLoadedAmmo = 6, revolverAmmoReserve = 60;
     private float reloadTime = 1;
+    public int damage = 1;
     private bool isReloading = false;
     public GameObject bulletPrefab;
     public Transform firePoint;
@@ -16,10 +17,10 @@ public class Revolver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        revolverAmmo = revolverMaxAmmo;
+        revolverAmmo = revolverLoadedAmmo;
         //UI Elements
         gameManager.weaponName = "Revolver";
-        gameManager.maxAmmo = revolverMaxAmmo;
+        gameManager.maxAmmo = revolverAmmoReserve;
         gameManager.ammo = revolverAmmo;
     }
 
@@ -27,22 +28,24 @@ public class Revolver : MonoBehaviour
     {
         //UI Elements
         gameManager.weaponName = "Revolver";
-        gameManager.maxAmmo = revolverMaxAmmo;
+        gameManager.maxAmmo = revolverAmmoReserve;
         gameManager.ammo = revolverAmmo;
+        isReloading = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Fires revolver
-        if (Input.GetMouseButtonDown(0) && revolverAmmo > 0)
+        if (Input.GetMouseButtonDown(0) && revolverAmmo > 0 && !isReloading)
         {
             Fire();
             revolverAmmo--;
             gameManager.ammo = revolverAmmo;
+            gameManager.maxAmmo = revolverAmmoReserve;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && revolverAmmoReserve > 0)
         {
             if (!isReloading)
                 StartCoroutine(Reload());
@@ -53,15 +56,26 @@ public class Revolver : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
         bullet.GetComponent<Rigidbody2D>().AddForce(firePoint.up * fireForce, ForceMode2D.Impulse);
+        bullet.GetComponent<MoveForward>().damage = damage;
     }
 
     IEnumerator Reload()
     {
         isReloading = true;
-        revolverAmmo = 0;
         yield return new WaitForSeconds(reloadTime);
-        revolverAmmo = revolverMaxAmmo;
+        if(revolverAmmoReserve > revolverLoadedAmmo)
+        {
+            revolverAmmoReserve = revolverAmmoReserve + revolverAmmo;
+            revolverAmmo = revolverLoadedAmmo;
+            revolverAmmoReserve = revolverAmmoReserve - revolverLoadedAmmo;
+        }
+        else
+        {
+            revolverAmmo = revolverAmmoReserve;
+            revolverAmmoReserve = 0;
+        }
         gameManager.ammo = revolverAmmo;
+        gameManager.maxAmmo = revolverAmmoReserve;
         isReloading = false;
     }
 }

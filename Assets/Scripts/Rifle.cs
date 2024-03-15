@@ -7,6 +7,7 @@ public class Rifle : MonoBehaviour
     private int rifleAmmo, rifleLoadedAmmo = 6,rifleAmmoReserve = 36;
     private float reloadTime = 1;
     private bool isReloading = false;
+    public int damage = 3;
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float fireForce = 20f;
@@ -19,7 +20,7 @@ public class Rifle : MonoBehaviour
         rifleAmmo = rifleLoadedAmmo;
         //UI Elements
         gameManager.weaponName = "Rifle";
-        gameManager.maxAmmo = rifleLoadedAmmo;
+        gameManager.maxAmmo = rifleAmmoReserve;
         gameManager.ammo = rifleAmmo;
     }
 
@@ -29,20 +30,22 @@ public class Rifle : MonoBehaviour
         gameManager.weaponName = "Rifle";
         gameManager.maxAmmo = rifleAmmoReserve;
         gameManager.ammo = rifleAmmo;
+        isReloading = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Fires revolver
-        if (Input.GetMouseButtonDown(0) && rifleAmmo > 0)
+        if (Input.GetMouseButtonDown(0) && rifleAmmo > 0 && !isReloading)
         {
             Fire();
             rifleAmmo--;
             gameManager.ammo = rifleAmmo;
+            gameManager.maxAmmo = rifleAmmoReserve;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && rifleAmmoReserve > 0)
         {
             if (!isReloading)
                 StartCoroutine(Reload());
@@ -53,15 +56,26 @@ public class Rifle : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
         bullet.GetComponent<Rigidbody2D>().AddForce(firePoint.up * fireForce, ForceMode2D.Impulse);
+        bullet.GetComponent<MoveForward>().damage = damage;
     }
 
     IEnumerator Reload()
     {
         isReloading = true;
-        rifleAmmo = 0;
         yield return new WaitForSeconds(reloadTime);
-        rifleAmmo = rifleLoadedAmmo;
+        if (rifleAmmoReserve > rifleLoadedAmmo)
+        {
+            rifleAmmoReserve = rifleAmmoReserve + rifleAmmo;
+            rifleAmmo = rifleLoadedAmmo;
+            rifleAmmoReserve = rifleAmmoReserve - rifleLoadedAmmo;
+        }
+        else
+        {
+            rifleAmmo = rifleAmmoReserve;
+            rifleAmmoReserve = 0;
+        }
         gameManager.ammo = rifleAmmo;
+        gameManager.maxAmmo = rifleAmmoReserve;
         isReloading = false;
     }
 }

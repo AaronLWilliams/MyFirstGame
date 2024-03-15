@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class MoveForward : MonoBehaviour
 {
-    public int damage = 1;
+    public int damage;
     public float speed = 20.0f;
     // Start is called before the first frame update
     void Start()
@@ -21,12 +21,14 @@ public class MoveForward : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D Other)
-    {   
+    {
         if (Other.gameObject.tag == "Player" || Other.gameObject.tag == "Enemy")
         {
             var healthcomponent = Other.gameObject.GetComponent<health>();
             healthcomponent.takeDamage(damage);
         }
+        if (Other.gameObject.tag == "Bullet")
+            return;
         Destroy(this.gameObject);
     }
 

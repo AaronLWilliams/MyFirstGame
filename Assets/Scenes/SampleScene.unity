@@ -355,6 +355,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 062c20afeebf2224488e948613c20360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  pellets: 6
+  bulletPrefab: {fileID: 339153670743531567, guid: b2fecbaa61292e24793931c25d078cb3, type: 3}
+  firePoint: {fileID: 2057670284}
+  spread: 0.25
+  fireForce: 20
+  gameManager: {fileID: 541159423}
 --- !u!1 &238834445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1851,6 +1858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f50c0a24bb0de419f4c8457ac0c16a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 3
   bulletPrefab: {fileID: 339153670743531567, guid: b2fecbaa61292e24793931c25d078cb3, type: 3}
   firePoint: {fileID: 946191365}
   fireForce: 20
@@ -2344,7 +2352,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 6/6
+  m_text: ammo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2519,6 +2527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b847b0ce2c1657b45b606a30ce39ab65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 2
   bulletPrefab: {fileID: 339153670743531567, guid: b2fecbaa61292e24793931c25d078cb3, type: 3}
   firePoint: {fileID: 1088813464}
   fireForce: 20
