@@ -5,9 +5,11 @@ using UnityEngine;
 public class Rifle : MonoBehaviour
 {
     private int rifleAmmo, rifleLoadedAmmo = 6,rifleAmmoReserve = 36;
-    private float reloadTime = 1;
+    private float reloadTime = 1f;
+    private float cooldown = .7f;
     private bool isReloading = false;
-    public int damage = 3;
+    private bool isFireCooldown = false;
+    public int damage = 5;
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float fireForce = 20f;
@@ -37,9 +39,10 @@ public class Rifle : MonoBehaviour
     void Update()
     {
         //Fires revolver
-        if (Input.GetMouseButtonDown(0) && rifleAmmo > 0 && !isReloading)
+        if (Input.GetMouseButtonDown(0) && rifleAmmo > 0 && !isFireCooldown && !isReloading)
         {
             Fire();
+            StartCoroutine(FireCooldown());
             rifleAmmo--;
             gameManager.ammo = rifleAmmo;
             gameManager.maxAmmo = rifleAmmoReserve;
@@ -77,5 +80,12 @@ public class Rifle : MonoBehaviour
         gameManager.ammo = rifleAmmo;
         gameManager.maxAmmo = rifleAmmoReserve;
         isReloading = false;
+    }
+
+    IEnumerator FireCooldown()
+    {
+        isFireCooldown = true;
+        yield return new WaitForSeconds(cooldown);
+        isFireCooldown = false;
     }
 }

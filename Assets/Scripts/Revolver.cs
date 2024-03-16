@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Revolver : MonoBehaviour
 {
     private int revolverAmmo, revolverLoadedAmmo = 6, revolverAmmoReserve = 60;
     private float reloadTime = 1;
-    public int damage = 1;
+    public int damage = 3;
+    private float cooldown = .2f;
     private bool isReloading = false;
+    private bool isFireCooldown = false;
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float fireForce = 20f;
@@ -37,9 +40,10 @@ public class Revolver : MonoBehaviour
     void Update()
     {
         //Fires revolver
-        if (Input.GetMouseButtonDown(0) && revolverAmmo > 0 && !isReloading)
+        if (Input.GetMouseButtonDown(0) && revolverAmmo > 0 && !isFireCooldown && !isReloading)
         {
             Fire();
+            StartCoroutine(FireCooldown());
             revolverAmmo--;
             gameManager.ammo = revolverAmmo;
             gameManager.maxAmmo = revolverAmmoReserve;
@@ -77,5 +81,12 @@ public class Revolver : MonoBehaviour
         gameManager.ammo = revolverAmmo;
         gameManager.maxAmmo = revolverAmmoReserve;
         isReloading = false;
+    }
+
+    IEnumerator FireCooldown()
+    {
+        isFireCooldown = true;
+        yield return new WaitForSeconds(cooldown);
+        isFireCooldown = false;
     }
 }

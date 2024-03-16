@@ -26,7 +26,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        health = player.GetComponent<health>().currentHealth;
+        if (player != null)
+        {
+            health = player.GetComponent<health>().currentHealth;
+        }
+        else
+        {
+            health = 0;
+        }
         WeaponText.text = weaponName;
         AmmoText.text = ammo + "/" + maxAmmo;
         HealthText.text = "Health: " + health;

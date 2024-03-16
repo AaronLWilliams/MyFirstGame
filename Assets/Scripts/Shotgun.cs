@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Shotgun : MonoBehaviour
 {
     private int shotgunAmmo, shotgunLoadedAmmo = 2, shotgunAmmoReserve = 16;
     private float reloadTime = 1;
+    private float cooldown = .2f;
     private bool isReloading = false;
+    private bool isFireCooldown = false;
     public int damage = 1;
     public int pellets = 6;
     public GameObject bulletPrefab;
@@ -39,10 +42,11 @@ public class Shotgun : MonoBehaviour
     void Update()
     {
         //Fires revolver
-        if (Input.GetMouseButtonDown(0) && shotgunAmmo > 0 && !isReloading)
+        if (Input.GetMouseButtonDown(0) && shotgunAmmo > 0 && !isFireCooldown && !isReloading)
         {
             for(int i = 0; i < pellets; i++)
                 Fire();
+            StartCoroutine(FireCooldown());
             shotgunAmmo--;
             gameManager.ammo = shotgunAmmo;
             gameManager.maxAmmo = shotgunAmmoReserve;
@@ -81,5 +85,12 @@ public class Shotgun : MonoBehaviour
         gameManager.ammo = shotgunAmmo;
         gameManager.maxAmmo = shotgunAmmoReserve;
         isReloading = false;
+    }
+
+    IEnumerator FireCooldown()
+    {
+        isFireCooldown = true;
+        yield return new WaitForSeconds(cooldown);
+        isFireCooldown = false;
     }
 }
