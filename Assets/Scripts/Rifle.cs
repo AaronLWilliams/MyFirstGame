@@ -7,8 +7,10 @@ public class Rifle : MonoBehaviour
     private int rifleAmmo, rifleLoadedAmmo = 6,rifleAmmoReserve = 36;
     private float reloadTime = 1f;
     private float cooldown = .7f;
+    private float switchTime = .5f;
     private bool isReloading = false;
     private bool isFireCooldown = false;
+    private bool isSwitching = false;
     public int damage = 5;
     public GameObject bulletPrefab;
     public Transform firePoint;
@@ -24,6 +26,7 @@ public class Rifle : MonoBehaviour
         gameManager.weaponName = "Rifle";
         gameManager.maxAmmo = rifleAmmoReserve;
         gameManager.ammo = rifleAmmo;
+        StartCoroutine(SwitchCooldown());
     }
 
     private void OnEnable()
@@ -32,6 +35,8 @@ public class Rifle : MonoBehaviour
         gameManager.weaponName = "Rifle";
         gameManager.maxAmmo = rifleAmmoReserve;
         gameManager.ammo = rifleAmmo;
+        StartCoroutine(SwitchCooldown());
+        isFireCooldown = false;
         isReloading = false;
     }
 
@@ -39,7 +44,7 @@ public class Rifle : MonoBehaviour
     void Update()
     {
         //Fires revolver
-        if (Input.GetMouseButtonDown(0) && rifleAmmo > 0 && !isFireCooldown && !isReloading)
+        if (Input.GetMouseButtonDown(0) && rifleAmmo > 0 && !isFireCooldown && !isReloading && !isSwitching)
         {
             Fire();
             StartCoroutine(FireCooldown());
@@ -87,5 +92,12 @@ public class Rifle : MonoBehaviour
         isFireCooldown = true;
         yield return new WaitForSeconds(cooldown);
         isFireCooldown = false;
+    }
+
+    IEnumerator SwitchCooldown()
+    {
+        isSwitching = true;
+        yield return new WaitForSeconds(switchTime);
+        isSwitching = false;
     }
 }

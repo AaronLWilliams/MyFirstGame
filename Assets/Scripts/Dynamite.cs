@@ -14,6 +14,9 @@ public class Dynamite : MonoBehaviour
     void Start()
     {
         StartCoroutine(ExplosionCountdown());
+        //adds spin to the dynamite
+        var impulse = (180 * Mathf.Deg2Rad) * rb.inertia;
+        rb.AddTorque(impulse, ForceMode2D.Impulse);
     }
 
     // Update is called once per frame

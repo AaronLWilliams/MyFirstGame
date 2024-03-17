@@ -9,6 +9,7 @@ public class Grenade : MonoBehaviour
     private int[] count = { 3 };
 
     public GameObject dynamitePrefab;
+    public Transform throwPoint;
 
     void Start()
     {
@@ -28,12 +29,13 @@ public class Grenade : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && count[currentGrenade] > 0)
         {
             ThrowGrenade();
+            count[currentGrenade]--;
         }
     }
 
     public void ThrowGrenade()
     {
-        GameObject grenade = Instantiate(dynamitePrefab, transform.position, transform.rotation);
-        grenade.GetComponent<Rigidbody2D>().AddForce(transform.up * throwForce, ForceMode2D.Impulse);
+        GameObject grenade = Instantiate(dynamitePrefab, throwPoint.position, transform.rotation);
+        grenade.GetComponent<Rigidbody2D>().AddForce(throwPoint.up * throwForce, ForceMode2D.Impulse);
     }
 }
