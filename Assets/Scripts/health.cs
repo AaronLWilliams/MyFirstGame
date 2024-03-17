@@ -16,7 +16,7 @@ public class health : MonoBehaviour
     {
         currentHealth -= amount;
 
-        if(currentHealth <= 0)
+        if(currentHealth <= 0)//Rework to have destroy gameobject in objects script
         {
             Destroy(gameObject);
         }

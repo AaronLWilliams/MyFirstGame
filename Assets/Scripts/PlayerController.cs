@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -32,7 +33,10 @@ public class PlayerController : MonoBehaviour
         movementDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         
-
+        if(player.GetComponent<health>().currentHealth <= 0)
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 
     private void FixedUpdate()
