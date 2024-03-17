@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class Dynamite : MonoBehaviour
 {
+    public int maxHealth = 1;
     public int fuseTimer = 5;
     public int damage = 5;
     public float radius = 5f;
     public float force = 20f;
     public Rigidbody2D rb;
+    public GameObject dynamite;
     // Start is called before the first frame update
     void Start()
     {
+        dynamite.GetComponent<health>().maxHealth = maxHealth;
         StartCoroutine(ExplosionCountdown());
         //adds spin to the dynamite
         var impulse = (180 * Mathf.Deg2Rad) * rb.inertia;
@@ -22,7 +25,7 @@ public class Dynamite : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        noHealth();
     }
 
     void OnCollisionEnter2D(Collision2D Other)
@@ -51,6 +54,15 @@ public class Dynamite : MonoBehaviour
             }
         }
         Destroy(this.gameObject);
+    }
+
+    void noHealth()
+    {
+        var healthcomponent = dynamite.GetComponent<health>();
+        if (healthcomponent.currentHealth < 0)
+        {
+            explode();
+        }
     }
 
     IEnumerator ExplosionCountdown()

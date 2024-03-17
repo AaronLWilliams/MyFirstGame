@@ -96,9 +96,10 @@ GameObject:
   - component: {fileID: 4089777713332702088}
   - component: {fileID: 5127688693499519697}
   - component: {fileID: 4637937570161855789}
+  - component: {fileID: -8565914745026285028}
   m_Layer: 0
   m_Name: Dynamite
-  m_TagString: Untagged
+  m_TagString: Explosive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,11 +177,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a28ea60438a274993251a070de882a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 1
   fuseTimer: 5
   damage: 5
   radius: 5
   force: 20
   rb: {fileID: 4637937570161855789}
+  dynamite: {fileID: 7697761304495040039}
 --- !u!50 &4637937570161855789
 Rigidbody2D:
   serializedVersion: 4
@@ -208,3 +211,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-8565914745026285028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7697761304495040039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31052300b11ddf4438ad61ac4cbbd9c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  currentHealth: 0

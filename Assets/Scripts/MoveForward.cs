@@ -22,7 +22,7 @@ public class MoveForward : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D Other)
     {
-        if (Other.gameObject.tag == "Player" || Other.gameObject.tag == "Enemy")
+        if (Other.gameObject.tag == "Player" || Other.gameObject.tag == "Enemy" || Other.gameObject.tag == "Explosive")
         {
             var healthcomponent = Other.gameObject.GetComponent<health>();
             healthcomponent.takeDamage(damage);
