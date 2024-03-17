@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Zombie : MonoBehaviour
 {
@@ -34,6 +35,11 @@ public class Zombie : MonoBehaviour
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             rb.rotation = angle;
             moveDirection = direction;
+        }
+        //If Zombie runs out of health
+        if (zombie.GetComponent<health>().currentHealth <= 0)
+        {
+            Destroy(this.gameObject);
         }
     }
 

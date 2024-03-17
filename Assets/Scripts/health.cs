@@ -15,10 +15,5 @@ public class health : MonoBehaviour
     public void takeDamage(int amount)
     {
         currentHealth -= amount;
-
-        if(currentHealth <= 0)//Rework to have destroy gameobject in objects script
-        {
-            Destroy(gameObject);
-        }
     }
 }

@@ -30,9 +30,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Player Movement
         movementDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
+
+        //If Player runs out of health
         if(player.GetComponent<health>().currentHealth <= 0)
         {
             SceneManager.LoadScene("MainMenu");
