@@ -10,6 +10,7 @@ public class Grenade : MonoBehaviour
 
     public GameObject dynamitePrefab;
     public Transform throwPoint;
+    public GameManager gameManager;
 
     void Start()
     {
@@ -30,6 +31,13 @@ public class Grenade : MonoBehaviour
         {
             ThrowGrenade();
             count[currentGrenade]--;
+            gameManager.grenadeCount = count[currentGrenade];
+        }
+
+        if(currentGrenade == 0)//change if more grenade types added
+        {
+            gameManager.grenadeName = "Dynamite";
+            gameManager.grenadeCount = count[currentGrenade];
         }
     }
 

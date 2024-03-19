@@ -10,9 +10,13 @@ public class GameManager : MonoBehaviour
     public int health;
     public int ammo;
     public int maxAmmo;
+    public int grenadeCount;
     public string weaponName;
+    public string grenadeName;
     public TMP_Text WeaponText;
     public TMP_Text AmmoText;
+    public TMP_Text GrenadeText;
+    public TMP_Text GrenadeCountText;
     public TMP_Text HealthText;
     public GameObject player;
 
@@ -36,6 +40,8 @@ public class GameManager : MonoBehaviour
         }
         WeaponText.text = weaponName;
         AmmoText.text = ammo + "/" + maxAmmo;
+        GrenadeText.text = grenadeName;
+        GrenadeCountText.text = grenadeCount.ToString();
         HealthText.text = "Health: " + health;
     }
 
